@@ -66,19 +66,35 @@ describe('sortList', () => {
   });
 });
 
-/**
- * Add you test/s here and get this helper file to 100% test coverage!!!
- * You can check that your coverage meets 100% by running `npm run test:coverage`
- */
-
 describe('formatCurrency', () => {
-  it('does <insert your test here>', () => {
-    return true;
+  it('returns $0.00 if param is not a number', () => {
+    const input = 'word';
+
+    expect(formatCurrency(input)).toEqual('$0.00');
   });
+
+  it('returns a properly formatted string if param is a number', () => {
+    const input = 20;
+
+    expect(formatCurrency(input)).toEqual('$20.00');
+  })
 });
 
 describe('handlePromises', () => {
-  it('does <insert your test here>', () => {
-    return true;
+  it('returns an array of resolved promises', async () => {
+    const promise1 = new Promise((res, rej) => res('hello'));
+    const promise2 = new Promise((res, rej) => res('world'));
+
+    const data = await handlePromises([promise1, promise2]);
+
+    expect(data).toEqual(['hello', 'world']);
   });
+
+  it('resolves a rejected promise', async () => {
+    const promise1 = new Promise((res, rej) => rej('error'));
+
+    const data = await handlePromises([promise1]);
+
+    expect(data).toEqual(new Error('error'));
+  })
 });
